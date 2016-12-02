@@ -42,10 +42,10 @@ def test_cifar_convnet_error(device_id):
     #force_deterministic_algorithms()
     # TODO: do the above; they lead to slightly different results, so not doing it for now
 
-    reader_train_factory = lambda data_size: create_reader(os.path.join(base_path, 'train_map.txt'), os.path.join(base_path, 'CIFAR-10_mean.xml'), True, data_size)
-    reader_test_factory  = lambda data_size: create_reader(os.path.join(base_path, 'test_map.txt'), os.path.join(base_path, 'CIFAR-10_mean.xml'), False, data_size)
+    reader_train = create_reader(os.path.join(base_path, 'train_map.txt'), os.path.join(base_path, 'CIFAR-10_mean.xml'), True)
+    reader_test  = create_reader(os.path.join(base_path, 'test_map.txt'), os.path.join(base_path, 'CIFAR-10_mean.xml'), False)
 
-    test_error = convnet_cifar10_dataaug(reader_train_factory, reader_test_factory, max_epochs=1)
+    test_error = convnet_cifar10_dataaug(reader_train, reader_test, max_epochs=1)
     expected_test_error = 0.617
 
     assert np.allclose(test_error, expected_test_error,
